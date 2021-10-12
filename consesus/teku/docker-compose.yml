@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+
+  consensus:
+    stop_grace_period: 1m
+    container_name: teku-consensus-client
+    restart: unless-stopped
+    image: consensys/teku:latest
+    volumes:
+      - ./tekuconsensus-data:/var/lib/teku
+    ports:
+      - 9000:9000/tcp
+      - 9000:9000/udp
+      - 8008:8008/tcp
+      - 5051:5051/tcp
+    environment:
+      - JAVA_OPTS=-XX:SoftMaxHeapSize=2g -Xmx4g
+    command:
+      - --data-path=/var/lib/teku
+      - --log-destination=BOTH
+      - --logging=${LOG_LEVEL}
+      - --network=${NETWORK}
+      - --p2p-port=9000
+      - --p2p-peer-upper-bound=${TEKU_PEER_COUNT}
+      - --rest-api-host-allowlist=*
+      - --rest-api-enabled=true
+      - --eth1-endpoints=${EC_NODE}
+      - --eth1-deposit-contract-max-request-size=150
+      - --metrics-enabled=true
+      - --metrics-port=8008
+      - --metrics-interface=0.0.0.0
+      - --metrics-host-allowlist=*
+      - ${TEKU_RAPID_SYNC}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  prometheus:
+    restart: unless-stopped
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+    expose:
+      - 9090/tcp
+    command: 
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    depends_on:
+      - consensus
+      - node-exporter

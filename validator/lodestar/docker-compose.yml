@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+
+  validator:
+    restart: unless-stopped
+    container_name: lodestar-validator-client
+    image: chainsafe/lodestar:latest
+    volumes:
+      - ./lsvalidator-data:/var/lib/lodestar/validator
+      - ./keystore:/var/lib/lodestar/keystore
+    command: 
+      - validator
+      - --network=${NETWORK}
+      - --rootDir=/var/lib/lodestar/validator
+      - --logFile=/var/lib/lodestart/validator/logs/validator.log
+      - --logLevelFile=${LOG_LEVEL}
+      - --logRotate
+      - --logMaxFiles 5
+      - --importKeystoresPath=/var/lib/lodestar/keystore
+      - --importKeystoresPassword=/var/lib/lodestar/keystore/password.txt
+      - --server=${CC_NODE}

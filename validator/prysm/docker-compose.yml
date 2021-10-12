@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+
+  validator:
+    restart: unless-stopped
+    container_name: prysm-validator-client
+    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    volumes:
+      - ./prysmvalidator-data:/var/lib/prysm
+      - ./wallet:/var/lib/prysm/wallet
+    ports:
+      - 8081:8081/tcp
+    command:
+      - --datadir=/var/lib/prysm
+      - --wallet-dir=/var/lib/prysm/wallet
+      - --beacon-rpc-provider=${CC_NODE}
+      - --graffiti=${GRAFFITI}
+      - --verbosity=${LOG_LEVEL}
+      - --${NETWORK}
+      - --enable-doppelganger
+      - --accept-terms-of-use
+      - --wallet-password-file=/var/lib/prysm/password.txt
+      - --monitoring-host=0.0.0.0
+
+  prometheus:
+    restart: unless-stopped
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+    expose:
+      - 9090/tcp
+    command: 
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    depends_on:
+      - validator

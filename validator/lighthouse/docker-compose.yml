@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+
+  validator:
+    restart: unless-stopped
+    container_name: lighthouse-validator-client
+    image: sigp/lighthouse:latest
+    volumes:
+      - ./lhvalidator-data:/var/lib/lighthouse
+      - ./keystore:/var/lib/lighthouse/keystore
+      - ./validator_definitions.yml:/var/lib/lighthouse/validators/validator_definitions.yml
+    ports:
+      - 5064:5064/tcp
+    command:
+      - lighthouse
+      - --logfile=/var/lib/lighthouse/logs/lh-validator.log
+      - vc
+      - --datadir=/var/lib/lighthouse
+      - --beacon-nodes=${CC_NODE}
+      - --graffiti=${GRAFFITI}
+      - --network=${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+      - --metrics
+      - --metrics-address=0.0.0.0
+
+  prometheus:
+    restart: unless-stopped
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+    expose:
+      - 9090/tcp
+    command: 
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    depends_on:
+      - validator

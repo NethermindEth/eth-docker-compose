@@ -1,0 +1,49 @@
+services:
+  consensus:
+    stop_grace_period: 1m
+    container_name: prysm-consesus-client
+    restart: unless-stopped
+    image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
+    volumes:
+      - ./prysmconsensus-data:/var/lib/prysm
+      - ./genesis.ssz:/genesis/genesis.ssz # Testnets only
+    ports:
+      - 13000:13000/tcp
+      - 12000:12000/udp
+      - 4000:4000/tcp
+      - 8080:8080/tcp
+    command:
+      - --datadir=/var/lib/prysm/
+      - --verbosity=${LOG_LEVEL}
+      - --${NETWORK}
+      - --p2p-tcp-port=13000
+      - --p2p-udp-port=12000
+      - --p2p-max-peers=50
+      - --rpc-host=0.0.0.0
+      - --grpc-gateway-host=0.0.0.0
+      - --http-web3provider=${EC_NODE}
+      - --fallback-web3provider=${EC_FALLBACK_NODE1}
+      - --fallback-web3provider=${EC_FALLBACK_NODE2}
+      - --eth1-header-req-limit=150
+      - --monitoring-host=0.0.0.0
+      - --genesis-state=/genesis/genesis.ssz # Testnet only
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  prometheus:
+    restart: unless-stopped
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+    expose:
+      - 9090/tcp
+    command: 
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    depends_on:
+      - consensus
