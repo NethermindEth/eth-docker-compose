@@ -7,6 +7,7 @@ services:
     container_name: teku-consensus-client
     restart: unless-stopped
     image: consensys/teku:latest
+    user: root
     volumes:
       - ./tekuconsensus-data:/var/lib/teku
     ports:

@@ -5,18 +5,18 @@ services:
   validator:
     restart: unless-stopped
     container_name: lodestar-validator-client
-    image: chainsafe/lodestar:latest
+    image: chainsafe/lodestar:next
     volumes:
       - ./lsvalidator-data:/var/lib/lodestar/validator
       - ./keystore:/var/lib/lodestar/keystore
+    environment:
+      NODE_OPTIONS: --max_old_space_size=8192
     command: 
       - validator
       - --network=${NETWORK}
       - --rootDir=/var/lib/lodestar/validator
       - --logFile=/var/lib/lodestart/validator/logs/validator.log
       - --logLevelFile=${LOG_LEVEL}
-      - --logRotate
-      - --logMaxFiles 5
       - --importKeystoresPath=/var/lib/lodestar/keystore
       - --importKeystoresPassword=/var/lib/lodestar/keystore/password.txt
       - --server=${CC_NODE}

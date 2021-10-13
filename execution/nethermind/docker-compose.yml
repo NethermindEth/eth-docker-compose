@@ -22,7 +22,7 @@ services:
       - --Init.WebSocketsEnabled=true
       - --JsonRpc.Enabled=true
       - --JsonRpc.Host=0.0.0.0
-      - --JsonRpc.EnabledModules="Web3,Eth,Subscribe,Net"
+      - --JsonRpc.EnabledModules=[Web3,Eth,Subscribe,Net]
       - --HealthChecks.Enabled=true
       - --Pruning.CacheMb=${PRUNING_CACHEMB}
     logging:

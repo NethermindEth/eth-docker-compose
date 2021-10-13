@@ -22,8 +22,6 @@ services:
       - --network=${NETWORK}
       - --logFile=/var/lib/lodestart/consensus/logs/beacon.log 
       - --logLevelFile=${LOG_LEVEL}
-      - --logRotate 
-      - --logMaxFiles 5
       - --api.rest.enabled 
       - --api.rest.host=0.0.0.0
       - --network.discv5.bindAddr="/ip4/0.0.0.0/udp/9000"

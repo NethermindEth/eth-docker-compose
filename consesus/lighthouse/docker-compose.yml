@@ -14,6 +14,7 @@ services:
       - 9000:9000/udp
       - 5054:5054/tcp
     command:
+      - lighthouse
       - bn
       - --disable-upnp
       - --datadir=/var/lib/lighthouse
@@ -25,7 +26,7 @@ services:
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
-      - --checkpoint-sync-url=${LH_RAPID_SYNC}
+#      - --checkpoint-sync-url=${LH_RAPID_SYNC}
       - --metrics
       - --metrics-address=0.0.0.0
       - --validator-monitor-auto

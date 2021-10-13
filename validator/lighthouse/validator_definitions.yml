@@ -1,6 +1,0 @@
----
-- enabled: true
-  voting_public_key: "0x85828b2b604a33ad7c38e699641a3f92ae64263324cc320eeac12bb03b383612568b1016bb97b9c0cd3d11bb68e64672"
-  type: local_keystore
-  voting_keystore_path: /var/lib/lighthouse/keystore/keystore-m_12381_3600_0_0_0-1633688621.json
-  voting_keystore_password_path: /var/lib/lighthouse/keystore/secrets/0x85828b2b604a33ad7c38e699641a3f92ae64263324cc320eeac12bb03b383612568b1016bb97b9c0cd3d11bb68e64672

@@ -7,22 +7,12 @@ services:
     container_name: lighthouse-validator-client
     image: sigp/lighthouse:latest
     volumes:
-      - ./lhvalidator-data:/var/lib/lighthouse
-      - ./keystore:/var/lib/lighthouse/keystore
-      - ./validator_definitions.yml:/var/lib/lighthouse/validators/validator_definitions.yml
+      - ./lhvalidator-data:/root/.lighthouse
+      - ./scripts:/root/scripts:ro
+      - ./keystore:/root/validator_keys:ro
     ports:
       - 5064:5064/tcp
-    command:
-      - lighthouse
-      - --logfile=/var/lib/lighthouse/logs/lh-validator.log
-      - vc
-      - --datadir=/var/lib/lighthouse
-      - --beacon-nodes=${CC_NODE}
-      - --graffiti=${GRAFFITI}
-      - --network=${NETWORK}
-      - --debug-level=${LOG_LEVEL}
-      - --metrics
-      - --metrics-address=0.0.0.0
+    command: sh /root/scripts/start-validator-client.sh
 
   prometheus:
     restart: unless-stopped

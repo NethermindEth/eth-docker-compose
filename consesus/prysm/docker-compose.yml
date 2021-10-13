@@ -27,6 +27,7 @@ services:
       - --eth1-header-req-limit=150
       - --monitoring-host=0.0.0.0
       - --genesis-state=/genesis/genesis.ssz # Testnet only
+      - --accept-terms-of-use
     logging:
       driver: "json-file"
       options:
