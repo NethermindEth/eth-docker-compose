@@ -8,11 +8,15 @@ services:
     image: sigp/lighthouse:latest
     volumes:
       - ./lhvalidator-data:/root/.lighthouse
-      - ./scripts:/root/scripts:ro
       - ./keystore:/root/validator_keys:ro
     ports:
       - 5064:5064/tcp
     command: sh /root/scripts/start-validator-client.sh
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   prometheus:
     restart: unless-stopped

@@ -13,18 +13,18 @@ services:
       - 30303:30303/udp
       - 8545:8545/tcp
     command: 
-      - --config=${NETWORK}
+      - --config=${NETHERMIND_NETWORK}
       - --datadir=/nethermind/data
-      - --log=${LOG_LEVEL}
+      - --log=${NETHERMIND_LOG_LEVEL}
       - --Metrics.Enabled=true
-      - --Metrics.PushgatewayUrl=${METRICS_URL}
-      - --Metrics.NodeName=${NODENAME}
+      - --Metrics.PushgatewayUrl=${NETHERMIND_METRICS_URL}
+      - --Metrics.NodeName=${NETHERMIND_NODENAME}
       - --Init.WebSocketsEnabled=true
       - --JsonRpc.Enabled=true
       - --JsonRpc.Host=0.0.0.0
       - --JsonRpc.EnabledModules=[Web3,Eth,Subscribe,Net]
       - --HealthChecks.Enabled=true
-      - --Pruning.CacheMb=${PRUNING_CACHEMB}
+      - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
     logging:
       driver: "json-file"
       options:

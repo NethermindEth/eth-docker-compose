@@ -22,6 +22,11 @@ services:
       - --accept-terms-of-use
       - --wallet-password-file=/var/lib/prysm/password.txt
       - --monitoring-host=0.0.0.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   prometheus:
     restart: unless-stopped
