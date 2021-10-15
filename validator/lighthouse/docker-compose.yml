@@ -7,11 +7,20 @@ services:
     container_name: lighthouse-validator-client
     image: sigp/lighthouse:latest
     volumes:
-      - ./lhvalidator-data:/root/.lighthouse
-      - ./keystore:/root/validator_keys:ro
+      - ./keystore:/var/lib/lighthouse/keystore
     ports:
       - 5064:5064/tcp
-    command: sh /root/scripts/start-validator-client.sh
+    command:
+      - lighthouse
+      - vc
+      - --beacon-nodes=${CC_NODE}
+      - --graffiti=${GRAFFITI}
+      - --network=${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+      - --metrics
+      - --metrics-address=0.0.0.0
+      - --validators-dir=/var/lib/lighthouse/keystore
+      - --secrets-dir=/var/lib/lighthouse/keystore/secrets
     logging:
       driver: "json-file"
       options:

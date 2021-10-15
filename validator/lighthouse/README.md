@@ -17,18 +17,7 @@ LOG_LEVEL=info
 ```sh
 mkdir keystore && mkdir keystore/secrets
 ```
-- [x] Create data dir
-```sh
-mkdir lhvalidator-data && chown -R ec2-user:ec2-user lhvalidator-data
-```
 - [x] Copy `keystore-m*` files to `keystore` and it's corresponding password files `voting_public_key` to `keystore/secrets`
-- [x] Fill in `validator_definitions.yml` file with keys data
-- [x] Move `keystore` to `lhvalidator-data` and `validator_definitions.yml` to `lhvalidator-data/validators`
-```sh
-mv keystore lhvalidator-data
-mkdir lhvalidator-data/validators
-mv validator_definitions.yml lhvalidator-data/validators/
-```
 
 - [x] Modify `incentive-program/validator/lighthouse/prometheus/prometheus.yml` file with the remote_write username and password
 

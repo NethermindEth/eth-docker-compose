@@ -17,7 +17,7 @@ services:
       - --datadir=/nethermind/data
       - --log=${NETHERMIND_LOG_LEVEL}
       - --Metrics.Enabled=true
-      - --Metrics.PushgatewayUrl=${NETHERMIND_METRICS_URL}
+      - --Metrics.PushGatewayUrl=${NETHERMIND_METRICS_URL}
       - --Metrics.NodeName=${NETHERMIND_NODENAME}
       - --Init.WebSocketsEnabled=true
       - --JsonRpc.Enabled=true
