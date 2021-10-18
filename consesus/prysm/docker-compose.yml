@@ -52,4 +52,4 @@ services:
       driver: awslogs
       options:
         awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
+        awslogs-stream: ${INSTANCE_NAME}
