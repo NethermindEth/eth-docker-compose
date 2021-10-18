@@ -17,7 +17,7 @@ services:
       - validator-client
       - --beacon-node-api-endpoint=${CC_NODE}
       - --data-path=/var/lib/teku
-      - --log-destination=FILE
+      - --log-destination=BOTH
       - --network=auto
       - --validators-graffiti=${GRAFFITI}
       - --validators-keystore-locking-enabled=true
