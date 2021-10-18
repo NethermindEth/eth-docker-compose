@@ -26,7 +26,7 @@ services:
       - --HealthChecks.Enabled=true
       - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
     logging:
-      driver: "json-file"
+      driver: awslogs
       options:
-        max-size: "10m"
-        max-file: "10"
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}

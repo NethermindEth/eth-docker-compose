@@ -23,10 +23,10 @@ services:
       - --wallet-password-file=/var/lib/prysm/password.txt
       - --monitoring-host=0.0.0.0
     logging:
-      driver: "json-file"
+      driver: awslogs
       options:
-        max-size: "10m"
-        max-file: "10"
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}
 
   prometheus:
     restart: unless-stopped
@@ -42,3 +42,8 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
     depends_on:
       - validator
+    logging: 
+      driver: awslogs
+      options:
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}-prometheus

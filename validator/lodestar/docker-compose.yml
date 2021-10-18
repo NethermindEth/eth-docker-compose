@@ -21,7 +21,7 @@ services:
       - --importKeystoresPassword=/var/lib/lodestar/keystore/password.txt
       - --server=${CC_NODE}
     logging:
-      driver: "json-file"
+      driver: awslogs
       options:
-        max-size: "10m"
-        max-file: "10"
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}

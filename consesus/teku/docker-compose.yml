@@ -19,7 +19,7 @@ services:
       - JAVA_OPTS=-XX:SoftMaxHeapSize=2g -Xmx4g
     command:
       - --data-path=/var/lib/teku
-      - --log-destination=BOTH
+      - --log-destination=CONSOLE
       - --logging=${LOG_LEVEL}
       - --network=${NETWORK}
       - --p2p-port=9000
@@ -34,10 +34,10 @@ services:
       - --metrics-host-allowlist=*
       - ${TEKU_RAPID_SYNC}
     logging:
-      driver: "json-file"
+      driver: awslogs
       options:
-        max-size: "10m"
-        max-file: "10"
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}
 
   prometheus:
     restart: unless-stopped
@@ -53,3 +53,8 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
     depends_on:
       - consensus
+    logging: 
+      driver: awslogs
+      options:
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}-prometheus

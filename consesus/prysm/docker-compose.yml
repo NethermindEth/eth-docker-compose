@@ -29,10 +29,10 @@ services:
       - --genesis-state=/genesis/genesis.ssz # Testnet only
       - --accept-terms-of-use
     logging:
-      driver: "json-file"
+      driver: awslogs
       options:
-        max-size: "10m"
-        max-file: "10"
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}
 
   prometheus:
     restart: unless-stopped
@@ -48,3 +48,8 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
     depends_on:
       - consensus
+    logging: 
+      driver: awslogs
+      options:
+        awslogs-create-group: "true"
+        awslogs-stream: ${INSTANCE_NAME}-prometheus
