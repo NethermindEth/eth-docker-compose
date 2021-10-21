@@ -29,10 +29,7 @@ services:
       - --genesis-state=/genesis/genesis.ssz # Testnet only
       - --accept-terms-of-use
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs
 
   prometheus:
     restart: unless-stopped
@@ -48,8 +45,5 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
     depends_on:
       - consensus
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
+    logging:
+      driver: gcplogs

@@ -21,7 +21,4 @@ services:
       - --importKeystoresPassword=/var/lib/lodestar/keystore/password.txt
       - --server=${CC_NODE}
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

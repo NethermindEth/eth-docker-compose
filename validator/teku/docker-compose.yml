@@ -29,10 +29,7 @@ services:
       - --metrics-interface=0.0.0.0
       - --metrics-host-allowlist=*
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs
 
   prometheus:
     restart: unless-stopped
@@ -48,8 +45,5 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
     depends_on:
       - validator
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
+    logging:
+      driver: gcplogs
