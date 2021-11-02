@@ -26,8 +26,7 @@ echo $PASSWORD > wallet/password.txt
 
 - [x] Create a non-HD wallet
 ```sh
-./prysm.sh validator wallet create --wallet-dir=$HOME/incentive-program/validator/prysm/wallet --wallet-password-file=$HOME/incentive-program/validator/prysm/
-wallet/password.txt --keymanager-kind=direct
+./prysm.sh validator wallet create --wallet-dir=$HOME/incentive-program/validator/prysm/wallet --wallet-password-file=$HOME/incentive-program/validator/prysm/wallet/password.txt --keymanager-kind=direct
 ```
 
 - [x] Import keys
