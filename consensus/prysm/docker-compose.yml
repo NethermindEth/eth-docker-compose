@@ -6,7 +6,6 @@ services:
     image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
-      - ./genesis.ssz:/genesis/genesis.ssz # Testnets only
     ports:
       - 13000:13000/tcp
       - 12000:12000/udp
@@ -27,7 +26,6 @@ services:
       - --fallback-web3provider=${EC_FALLBACK_NODE2}
       - --eth1-header-req-limit=150
       - --monitoring-host=0.0.0.0
-      - --genesis-state=/genesis/genesis.ssz # Testnet only
       - --accept-terms-of-use
     logging:
       driver: awslogs
