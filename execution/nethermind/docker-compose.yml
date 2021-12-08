@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: nethermind-execution-client
     restart: unless-stopped
-    image: nethermind/nethermind
+    image: ${NETHERMIND_VERSION}
     volumes:
       - ./nethermindexecution-data/:/nethermind/data
     ports:
