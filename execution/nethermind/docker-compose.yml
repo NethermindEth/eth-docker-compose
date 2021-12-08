@@ -1,6 +1,7 @@
 version: '2.4'
 
 services:
+
   nethermind:
     stop_grace_period: 1m
     container_name: nethermind-execution-client
