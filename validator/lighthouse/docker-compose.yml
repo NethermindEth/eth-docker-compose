@@ -8,11 +8,13 @@ services:
     image: ${LIGHTHOUSE_IMAGE}
     volumes:
       - ./keystore:/var/lib/lighthouse/keystore
+      - ./gbc/config:/var/lib/lighthouse/config
     ports:
       - 5064:5064/tcp
     command:
       - lighthouse
       - vc
+      - --testnet-dir=/var/lib/lighthouse/config
       - --beacon-nodes=${CC_NODE}
       - --graffiti=${GRAFFITI}
       - --network=${NETWORK}
