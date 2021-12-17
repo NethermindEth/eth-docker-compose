@@ -19,7 +19,7 @@ services:
     command:
       - --datadir=/var/lib/prysm/
       - --contract-deployment-block=${CONTRACT_DEPLOYMENT_BLOCK}
-      - --bootstrap-node=/var/lib/prysm/config/bootnodes.yml
+      - --bootstrap-node=/var/lib/prysm/config/bootnodes.yaml
       - --config-file=/var/lib/prysm/config/config.yml
       - --chain-config-file=/var/lib/prysm/config/config.yml
       - --verbosity=${LOG_LEVEL}
