@@ -6,9 +6,10 @@ services:
     stop_grace_period: 1m
     container_name: prysm-consesus-client
     restart: unless-stopped
-    image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
+    image: ${PRYSM_IMAGE}
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
+      - ./config:/var/lib/prysm/config
     ports:
       - 13000:13000/tcp
       - 12000:12000/udp
@@ -17,8 +18,11 @@ services:
       - 8080:8080/tcp
     command:
       - --datadir=/var/lib/prysm/
+      - --contract-deployment-block 
+      - --bootstrap-node /var/lib/prysm/config/bootnodes.yaml
+      - --config-file /var/lib/prysm/config/config.yml
+      - --chain-config-file /var/lib/prysm/config/config.yml
       - --verbosity=${LOG_LEVEL}
-      - --${NETWORK}
       - --p2p-tcp-port=13000
       - --p2p-udp-port=12000
       - --p2p-max-peers=50
@@ -35,23 +39,3 @@ services:
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - consensus
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
