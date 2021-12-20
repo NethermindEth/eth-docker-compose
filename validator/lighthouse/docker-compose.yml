@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     container_name: lighthouse-validator-client
     image: ${LIGHTHOUSE_IMAGE}
+    ports:
+      - 5064:5064/tcp
     volumes:
       - ./keystore:/var/lib/lighthouse/keystore
       - ./gbc/config:/var/lib/lighthouse/config
@@ -18,6 +20,8 @@ services:
       - --debug-level=${LOG_LEVEL}
       - --validators-dir=/var/lib/lighthouse/keystore
       - --secrets-dir=/var/lib/lighthouse/keystore/secrets
+      - --metrics
+      - --metrics-address=0.0.0.0
     logging:
       driver: awslogs
       options:
