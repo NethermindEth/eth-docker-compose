@@ -2,24 +2,47 @@ version: "2.4"
 
 services:
 
+  validator-import:
+    image: ${PRYSM_IMAGE}
+    command: |
+      accounts import
+      --accept-terms-of-use
+      --keys-dir=/var/lib/prysm/keys/validator_keys
+      --account-password-file=/var/lib/prysm/keys/keystore_password.txt
+      --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
+    volumes:
+      - ./keystore:/var/lib/prysm/keys
+      - ./wallet:/var/lib/prysm/wallet
+  validator-list:
+    image: ${PRYSM_IMAGE}
+    command: |
+      accounts list
+      --accept-terms-of-use
+      --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
+    volumes:
+      - ./keystore:/var/lib/prysm/keys/validator_keys
+      - ./wallet:/var/lib/prysm/wallet
+
   validator:
     restart: unless-stopped
     container_name: prysm-validator-client
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    image: ${PRYSM_IMAGE}
     volumes:
       - ./prysmvalidator-data:/var/lib/prysm
       - ./wallet:/var/lib/prysm/wallet
+      - ./config:/var/lib/prysm/config
     ports:
       - 8081:8081/tcp
     command:
+      - --accept-terms-of-use
       - --datadir=/var/lib/prysm
+      - --config-file=/var/lib/prysm/config/config.yml
+      - --chain-config-file=/var/lib/prysm/config/config.yml
       - --wallet-dir=/var/lib/prysm/wallet
       - --beacon-rpc-provider=${CC_NODE}
       - --graffiti=${GRAFFITI}
       - --verbosity=${LOG_LEVEL}
-      - --${NETWORK}
       - --enable-doppelganger
-      - --accept-terms-of-use
       - --wallet-password-file=/var/lib/prysm/wallet/password.txt
       - --monitoring-host=0.0.0.0
     logging:
