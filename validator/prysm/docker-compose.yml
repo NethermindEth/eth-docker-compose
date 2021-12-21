@@ -28,7 +28,7 @@ services:
     container_name: prysm-validator-client
     image: ${PRYSM_IMAGE}
     volumes:
-      - ./wallet:/home/.eth2validators/prysm-wallet-v2t
+      - ./wallet:/var/lib/prysm/wallet
       - ./config:/var/lib/prysm/config
       - ./keystore:/var/lib/prysm/keys
     ports:
