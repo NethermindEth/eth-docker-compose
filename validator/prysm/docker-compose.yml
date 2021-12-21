@@ -43,7 +43,7 @@ services:
       - --graffiti=${GRAFFITI}
       - --verbosity=${LOG_LEVEL}
       - --enable-doppelganger
-      - --wallet-password-file=/var/lib/prysm/wallet/password.txt
+      - --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
       - --monitoring-host=0.0.0.0
     logging:
       driver: awslogs
