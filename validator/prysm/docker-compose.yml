@@ -9,10 +9,10 @@ services:
       --accept-terms-of-use
       --keys-dir=/var/lib/prysm/keys/validator_keys
       --account-password-file=/var/lib/prysm/keys/keystore_password.txt
-      --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
+      --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     volumes:
       - ./keystore:/var/lib/prysm/keys
-      - ./wallet:/var/lib/prysm/wallet
+      - ./wallet:/home/.eth2validators/prysm-wallet-v2
   validator-list:
     image: ${PRYSM_IMAGE}
     command: |
