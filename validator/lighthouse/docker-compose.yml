@@ -15,7 +15,7 @@ services:
       - ./gbc/config:/var/lib/lighthouse/config
       - ./keystore:/var/lib/lighthouse/keystore
       - ./validators::/var/lib/lighthouse/validators
-      
+
   validator:
     restart: unless-stopped
     container_name: lighthouse-validator-client
@@ -33,7 +33,6 @@ services:
       - --graffiti=${GRAFFITI}
       - --debug-level=${LOG_LEVEL}
       - --validators-dir=/var/lib/lighthouse/keystore
-      - --secrets-dir=/var/lib/lighthouse/keystore/secrets
       - --metrics
       - --metrics-address=0.0.0.0
     logging:
