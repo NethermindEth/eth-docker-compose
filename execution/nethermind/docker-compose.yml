@@ -28,7 +28,7 @@ services:
       - --HealthChecks.Enabled=true
       - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
       - --EthStats.Enabled=true
-      - --EthStats.Server={ETHSTATS_SERVER}
+      - --EthStats.Server=${ETHSTATS_SERVER}
       - --EthStats.Name=${INSTANCE_NAME}
       - --EthStats.Secret=${SECRET}
       - --EthStats.Contact=${CONTACT}
