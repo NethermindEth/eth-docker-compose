@@ -18,19 +18,19 @@ services:
     command: |
       accounts list
       --accept-terms-of-use
-      --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
+      --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     volumes:
       - ./keystore:/var/lib/prysm/keys/validator_keys
-      - ./wallet:/var/lib/prysm/wallet
+      - ./wallet:/home/.eth2validators/prysm-wallet-v2
 
   validator:
     restart: unless-stopped
     container_name: prysm-validator-client
     image: ${PRYSM_IMAGE}
     volumes:
-      - ./prysmvalidator-data:/var/lib/prysm
-      - ./wallet:/var/lib/prysm/wallet
+      - ./wallet:/home/.eth2validators/prysm-wallet-v2t
       - ./config:/var/lib/prysm/config
+      - ./keystore:/var/lib/prysm/keys/validator_keys
     ports:
       - 8081:8081/tcp
     command:
@@ -43,7 +43,7 @@ services:
       - --graffiti=${GRAFFITI}
       - --verbosity=${LOG_LEVEL}
       - --enable-doppelganger
-      - --wallet-password-file=/var/lib/prysm/wallet/wallet_password.txt
+      - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
       - --monitoring-host=0.0.0.0
     logging:
       driver: awslogs
