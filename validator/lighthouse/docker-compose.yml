@@ -23,7 +23,7 @@ services:
     ports:
       - 5064:5064/tcp
     volumes:
-      - ./keystore:/var/lib/lighthouse/keystore
+      - ./validators:/var/lib/lighthouse/validators
       - ./gbc/config:/var/lib/lighthouse/config
     command:
       - lighthouse
@@ -32,7 +32,7 @@ services:
       - --beacon-nodes=${CC_NODE}
       - --graffiti=${GRAFFITI}
       - --debug-level=${LOG_LEVEL}
-      - --validators-dir=/var/lib/lighthouse/keystore
+      - --validators-dir=/var/lib/lighthouse/validators
       - --metrics
       - --metrics-address=0.0.0.0
     logging:
