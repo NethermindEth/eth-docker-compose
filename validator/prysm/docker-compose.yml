@@ -30,7 +30,7 @@ services:
     volumes:
       - ./wallet:/home/.eth2validators/prysm-wallet-v2t
       - ./config:/var/lib/prysm/config
-      - ./keystore:/var/lib/prysm/keys/validator_keys
+      - ./keystore:/var/lib/prysm/keys
     ports:
       - 8081:8081/tcp
     command:
