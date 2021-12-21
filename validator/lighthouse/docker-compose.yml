@@ -14,7 +14,7 @@ services:
     volumes:
       - ./gbc/config:/var/lib/lighthouse/config
       - ./keystore:/var/lib/lighthouse/keystore
-      - ./validators::/var/lib/lighthouse/validators
+      - ./validators:/var/lib/lighthouse/validators
 
   validator:
     restart: unless-stopped
