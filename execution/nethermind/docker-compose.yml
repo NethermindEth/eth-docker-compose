@@ -29,7 +29,7 @@ services:
       - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
       - --EthStats.Enabled=true
       - --EthStats.Server=${ETHSTATS_SERVER}
-      - --EthStats.Name=${INSTANCE_NAME}
+      - --EthStats.Name=${NETHERMIND_NODENAME}
       - --EthStats.Secret=${SECRET}
       - --EthStats.Contact=${CONTACT}
     logging:
