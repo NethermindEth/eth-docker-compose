@@ -32,6 +32,12 @@ services:
       - --EthStats.Name=${INSTANCE_NAME}
       - --EthStats.Secret=${SECRET}
       - --EthStats.Contact=${CONTACT}
+    cap_add:
+      - SYS_ADMIN
+      - SYS_PTRACE
+    environment:
+      - DOTNET_PerfMapEnabled=1
+      - DOTNET_EnableEventLog=1
     logging:
       driver: awslogs
       options:
