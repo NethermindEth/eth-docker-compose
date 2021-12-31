@@ -11,20 +11,19 @@ services:
       - ./lhconsensus-data:/var/lib/lighthouse
       - ./gbc/config:/var/lib/lighthouse/config
     ports:
-      - 9000:9000/tcp
-      - 9000:9000/udp
+      - 13000:13000/tcp
+      - 12000:12000/udp
       - 5052:5052/tcp
       - 5054:5054/tcp
     command:
       - lighthouse
       - bn
-      - --disable-upnp
+      - --discovery-port=12000
       - --testnet-dir=/var/lib/lighthouse/config
       - --datadir=/var/lib/lighthouse
-      - --port=9000
+      - --port=13000
       - --http
       - --http-address=0.0.0.0
-      - --target-peers=${LH_PEER_COUNT}
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
