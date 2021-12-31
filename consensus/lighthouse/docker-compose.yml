@@ -10,21 +10,21 @@ services:
     volumes:
       - ./lhconsensus-data:/var/lib/lighthouse
     ports:
-      - 13000:13000/tcp
-      - 12000:12000/udp
+      - 9000:9000/tcp
+      - 9000:9000/udp
       - 5054:5054/tcp
       - 5052:5052/tcp
     command:
       - lighthouse
       - bn
+      - --disable-upnp
       - --datadir=/var/lib/lighthouse
-      - --discovery-port=12000
-      - --port=13000
+      - --port=9000
       - --http
       - --http-address=0.0.0.0
       - --network=${NETWORK}
+      - --target-peers=${LH_PEER_COUNT}
       - --eth1-endpoints=${EC_NODE}
-      - --enr-udp-port=12000
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
 #      - --checkpoint-sync-url=${LH_RAPID_SYNC}
