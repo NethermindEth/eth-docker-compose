@@ -27,7 +27,7 @@ services:
       - --JsonRpc.EnabledModules=[Web3,Eth,Subscribe,Net]
       - --HealthChecks.Enabled=true
       - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
-      - --EthStats.Enabled=true
+      - --EthStats.Enabled=${ETHSTATS_ENABLED}
       - --EthStats.Server=${ETHSTATS_SERVER}
       - --EthStats.Name=${INSTANCE_NAME}
       - --EthStats.Secret=${SECRET}
