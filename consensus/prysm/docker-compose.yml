@@ -17,6 +17,8 @@ services:
       - 4000:4000/tcp
       - 8080:8080/tcp
     command:
+      - --enable-upnp
+      - --subscribe-all-subnets
       - --datadir=/var/lib/prysm/
       - --contract-deployment-block=19469077
       - --bootstrap-node=/var/lib/prysm/config/bootnodes.yaml
@@ -26,6 +28,8 @@ services:
       - --p2p-tcp-port=13000
       - --p2p-udp-port=12000
       - --p2p-max-peers=${PEER_COUNT}
+      - --p2p-local-ip=0.0.0.0
+      - --p2p-host-ip=${PUBLIC_IP}
       - --rpc-host=0.0.0.0
       - --grpc-gateway-host=0.0.0.0
       - --http-web3provider=${EC_NODE}
