@@ -9,6 +9,7 @@ services:
     image: ${IMAGE_VERSION}
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
+      - ./config:/var/lib/prysm/config
     ports:
       - 13000:13000/tcp
       - 12000:12000/udp
@@ -17,8 +18,11 @@ services:
       - 8080:8080/tcp
     command:
       - --datadir=/var/lib/prysm/
+      - --contract-deployment-block=19469077
+      - --bootstrap-node=/var/lib/prysm/config/bootnodes.yaml
+      - --config-file=/var/lib/prysm/config/config.yml
+      - --chain-config-file=/var/lib/prysm/config/config.yml
       - --verbosity=${LOG_LEVEL}
-      - --${NETWORK}
       - --p2p-tcp-port=13000
       - --p2p-udp-port=12000
       - --p2p-max-peers=${PEER_COUNT}
