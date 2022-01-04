@@ -23,7 +23,7 @@ services:
       - --logging=${LOG_LEVEL}
       - --network=${NETWORK}
       - --p2p-port=9000
-      - --p2p-peer-upper-bound=${TEKU_PEER_COUNT}
+      - --p2p-peer-upper-bound=${PEER_COUNT}
       - --rest-api-host-allowlist=*
       - --rest-api-enabled=true
       - --eth1-endpoints=${EC_NODE}

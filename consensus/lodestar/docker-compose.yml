@@ -29,6 +29,7 @@ services:
       - --eth1.providerUrl=${EC_NODE}
       - --metrics.enabled
       - --weakSubjectivitySyncLatest=${LS_RAPID_SYNC}
+      - --network.targetPeers=${PEERS_COUNT}
     logging:
       driver: awslogs
       options:
