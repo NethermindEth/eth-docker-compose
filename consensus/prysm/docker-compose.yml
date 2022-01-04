@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: prysm-consesus-client
     restart: unless-stopped
-    image: ${PRYSM_IMAGE}
+    image: ${IMAGE_VERSION}
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
     ports:
