@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: lodestar-consensus-client
     restart: unless-stopped
-    image: chainsafe/lodestar:latest
+    image: ${LODESTAR_IMAGE}
     volumes:
       - ./lsconsensus-data:/var/lib/lodestar/consensus
     ports:

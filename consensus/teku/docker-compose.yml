@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: teku-consensus-client
     restart: unless-stopped
-    image: consensys/teku:latest
+    image: ${TEKU_IMAGE}
     user: root
     volumes:
       - ./tekuconsensus-data:/var/lib/teku
