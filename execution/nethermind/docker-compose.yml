@@ -30,8 +30,8 @@ services:
       - --EthStats.Enabled=${ETHSTATS_ENABLED}
       - --EthStats.Server=${ETHSTATS_SERVER}
       - --EthStats.Name=${INSTANCE_NAME}
-      - --EthStats.Secret=${SECRET}
-      - --EthStats.Contact=${CONTACT}
+      - --EthStats.Secret=${ETHSTATS_SECRET}
+      - --EthStats.Contact=${ETHSTATS_CONTACT}
     logging:
       driver: awslogs
       options:
