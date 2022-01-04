@@ -5,7 +5,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: lodestar-validator-client
-    image: chainsafe/lodestar:next
+    image: ${IMAGE_VERSION}
     volumes:
       - ./lsvalidator-data:/var/lib/lodestar/validator
       - ./keystore:/var/lib/lodestar/keystore

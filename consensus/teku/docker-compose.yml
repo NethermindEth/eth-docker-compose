@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: teku-consensus-client
     restart: unless-stopped
-    image: consensys/teku:latest
+    image: ${IMAGE_VERSION}
     user: root
     volumes:
       - ./tekuconsensus-data:/var/lib/teku
@@ -23,7 +23,7 @@ services:
       - --logging=${LOG_LEVEL}
       - --network=${NETWORK}
       - --p2p-port=9000
-      - --p2p-peer-upper-bound=${TEKU_PEER_COUNT}
+      - --p2p-peer-upper-bound=${PEER_COUNT}
       - --rest-api-host-allowlist=*
       - --rest-api-enabled=true
       - --eth1-endpoints=${EC_NODE}

@@ -3,7 +3,7 @@ version: "2.4"
 services:
 
   validator-import:
-    image: ${LIGHTHOUSE_IMAGE}
+    image: ${IMAGE_VERSION}
     command: |
       lighthouse account_manager validator import
       --testnet-dir=/var/lib/lighthouse/config
@@ -19,7 +19,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: lighthouse-validator-client
-    image: ${LIGHTHOUSE_IMAGE}
+    image: ${IMAGE_VERSION}
     ports:
       - 5064:5064/tcp
     volumes:

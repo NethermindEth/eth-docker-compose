@@ -3,7 +3,7 @@ version: "2.4"
 services:
 
   validator-import:
-    image: ${PRYSM_IMAGE}
+    image: ${IMAGE_VERSION}
     command: |
       accounts import
       --accept-terms-of-use
@@ -14,7 +14,7 @@ services:
       - ./keystore:/var/lib/prysm/keys
       - ./wallet:/home/.eth2validators/prysm-wallet-v2
   validator-list:
-    image: ${PRYSM_IMAGE}
+    image: ${IMAGE_VERSION}
     command: |
       accounts list
       --accept-terms-of-use
@@ -26,7 +26,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: prysm-validator-client
-    image: ${PRYSM_IMAGE}
+    image: ${IMAGE_VERSION}
     volumes:
       - ./wallet:/var/lib/prysm/wallet
       - ./config:/var/lib/prysm/config

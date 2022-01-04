@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: lighthouse-consensus-client
     restart: unless-stopped
-    image: ${LIGHTHOUSE_IMAGE}
+    image: ${IMAGE_VERSION}
     volumes:
       - ./lhconsensus-data:/var/lib/lighthouse
       - ./gbc/config:/var/lib/lighthouse/config
@@ -30,6 +30,7 @@ services:
       - --metrics
       - --metrics-address=0.0.0.0
       - --validator-monitor-auto
+      - --target-peers=${PEER_COUNT}
     logging:
       driver: awslogs
       options:
