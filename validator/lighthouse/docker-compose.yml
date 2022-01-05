@@ -8,8 +8,6 @@ services:
     image: sigp/lighthouse:latest
     volumes:
       - ./keystore:/var/lib/lighthouse/keystore
-    ports:
-      - 5064:5064/tcp
     command:
       - lighthouse
       - vc
@@ -17,8 +15,6 @@ services:
       - --graffiti=${GRAFFITI}
       - --network=${NETWORK}
       - --debug-level=${LOG_LEVEL}
-      - --metrics
-      - --metrics-address=0.0.0.0
       - --validators-dir=/var/lib/lighthouse/keystore
       - --secrets-dir=/var/lib/lighthouse/keystore/secrets
     logging:
@@ -26,23 +22,3 @@ services:
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - validator
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus

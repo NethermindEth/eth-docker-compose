@@ -9,8 +9,6 @@ services:
     volumes:
       - ./prysmvalidator-data:/var/lib/prysm
       - ./wallet:/var/lib/prysm/wallet
-    ports:
-      - 8081:8081/tcp
     command:
       - --datadir=/var/lib/prysm
       - --wallet-dir=/var/lib/prysm/wallet
@@ -21,29 +19,8 @@ services:
       - --enable-doppelganger
       - --accept-terms-of-use
       - --wallet-password-file=/var/lib/prysm/wallet/password.txt
-      - --monitoring-host=0.0.0.0
     logging:
       driver: awslogs
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - validator
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
