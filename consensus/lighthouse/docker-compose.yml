@@ -26,6 +26,7 @@ services:
       - --http-address=0.0.0.0
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
+      - --enr-address=${PUBLIC_IP}
       - --debug-level=${LOG_LEVEL}
       - --metrics
       - --metrics-address=0.0.0.0
