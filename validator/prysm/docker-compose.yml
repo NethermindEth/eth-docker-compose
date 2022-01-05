@@ -5,7 +5,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: prysm-validator-client
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    image: ${IMAGE_VERSION}
     volumes:
       - ./prysmvalidator-data:/var/lib/prysm
       - ./wallet:/var/lib/prysm/wallet

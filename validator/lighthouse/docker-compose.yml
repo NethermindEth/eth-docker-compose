@@ -5,7 +5,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: lighthouse-validator-client
-    image: sigp/lighthouse:latest
+    image: ${IMAGE_VERSION}
     volumes:
       - ./keystore:/var/lib/lighthouse/keystore
     command:

@@ -5,7 +5,7 @@ services:
   validator:
     restart: unless-stopped
     container_name: teku-validator-client
-    image: consensys/teku:latest
+    image: ${IMAGE_VERSION}
     user: root
     volumes:
       - ./tekuvalidator-data:/var/lib/teku
