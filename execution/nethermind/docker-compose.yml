@@ -6,7 +6,7 @@ services:
     stop_grace_period: 1m
     container_name: nethermind-execution-client
     restart: unless-stopped
-    image: ${NETHERMIND_VERSION}
+    image: ${IMAGE_VERSION}
     volumes:
       - ./nethermindexecution-data/:/nethermind/data
     ports:
@@ -27,10 +27,10 @@ services:
       - --JsonRpc.EnabledModules=[Web3,Eth,Subscribe,Net]
       - --HealthChecks.Enabled=true
       - --Pruning.CacheMb=${NETHERMIND_PRUNING_CACHEMB}
-      - --EthStats.Enabled=true
+      - --EthStats.Enabled=${ETHSTATS_ENABLED}
       - --EthStats.Server=${ETHSTATS_SERVER}
-      - --EthStats.Name=${NETHERMIND_NODENAME}
-      - --EthStats.Secret=${SECRET}
-      - --EthStats.Contact=${CONTACT}
+      - --EthStats.Name=${INSTANCE_NAME}
+      - --EthStats.Secret=${ETHSTATS_SECRET}
+      - --EthStats.Contact=${ETHSTATS_CONTACT}
     logging:
       driver: gcplogs

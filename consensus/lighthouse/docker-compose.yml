@@ -6,13 +6,12 @@ services:
     stop_grace_period: 1m
     container_name: lighthouse-consensus-client
     restart: unless-stopped
-    image: sigp/lighthouse
+    image: ${IMAGE_VERSION}
     volumes:
       - ./lhconsensus-data:/var/lib/lighthouse
     ports:
       - 9000:9000/tcp
       - 9000:9000/udp
-      - 5054:5054/tcp
       - 5052:5052/tcp
     command:
       - lighthouse
@@ -23,30 +22,10 @@ services:
       - --http
       - --http-address=0.0.0.0
       - --network=${NETWORK}
-      - --target-peers=${LH_PEER_COUNT}
+      - --target-peers=${PEER_COUNT}
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
 #      - --checkpoint-sync-url=${LH_RAPID_SYNC}
-      - --metrics
-      - --metrics-address=0.0.0.0
-      - --validator-monitor-auto
-    logging:
-      driver: gcplogs
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - consensus
     logging:
       driver: gcplogs
