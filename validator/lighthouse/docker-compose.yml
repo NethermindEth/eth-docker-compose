@@ -20,8 +20,6 @@ services:
     restart: unless-stopped
     container_name: lighthouse-validator-client
     image: ${IMAGE_VERSION}
-    ports:
-      - 5064:5064/tcp
     volumes:
       - ./validators:/var/lib/lighthouse/validators
       - ./gbc/config:/var/lib/lighthouse/config
@@ -33,30 +31,8 @@ services:
       - --graffiti=${GRAFFITI}
       - --debug-level=${LOG_LEVEL}
       - --validators-dir=/var/lib/lighthouse/validators
-      - --metrics
-      - --metrics-address=0.0.0.0
     logging:
       driver: awslogs
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - validator
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus

@@ -14,7 +14,6 @@ services:
       - 13000:13000/tcp
       - 12000:12000/udp
       - 5052:5052/tcp
-      - 5054:5054/tcp
     command:
       - lighthouse
       - bn
@@ -27,8 +26,6 @@ services:
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
-      - --metrics
-      - --metrics-address=0.0.0.0
       - --validator-monitor-auto
       - --target-peers=${PEER_COUNT}
     logging:
@@ -36,23 +33,3 @@ services:
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - consensus
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus

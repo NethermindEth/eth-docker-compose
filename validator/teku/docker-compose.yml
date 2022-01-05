@@ -10,8 +10,6 @@ services:
     volumes:
       - ./tekuvalidator-data:/var/lib/teku
       - ./keystore:/var/lib/teku/keystore
-    ports:
-      - 8008:8008/tcp
     environment:
       - JAVA_OPTS=-XX:SoftMaxHeapSize=2g -Xmx4g
     command:
@@ -24,10 +22,6 @@ services:
       - --validators-keystore-locking-enabled=true
       - --validator-keys=/var/lib/teku/keystore:/var/lib/teku/keystore/secrets
       - --validators-early-attestations-enabled=false
-      - --metrics-enabled=true
-      - --metrics-port=8008
-      - --metrics-interface=0.0.0.0
-      - --metrics-host-allowlist=*
     logging:
       driver: awslogs
       options:

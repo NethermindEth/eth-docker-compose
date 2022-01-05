@@ -31,8 +31,6 @@ services:
       - ./wallet:/var/lib/prysm/wallet
       - ./config:/var/lib/prysm/config
       - ./keystore:/var/lib/prysm/keys
-    ports:
-      - 8081:8081/tcp
     command:
       - --accept-terms-of-use
       - --datadir=/var/lib/prysm
@@ -44,29 +42,8 @@ services:
       - --verbosity=${LOG_LEVEL}
       - --enable-doppelganger
       - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
-      - --monitoring-host=0.0.0.0
     logging:
       driver: awslogs
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - validator
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus

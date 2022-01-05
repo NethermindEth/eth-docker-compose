@@ -13,7 +13,6 @@ services:
       - 9000:9000/tcp
       - 9000:9000/udp
       - 9596:9596/tcp
-      - 8008:8008/tcp
     environment:
       NODE_OPTIONS: --max_old_space_size=6144
     command: 
@@ -27,30 +26,8 @@ services:
       - --network.discv5.bindAddr="/ip4/0.0.0.0/udp/9000"
       - --network.localMultiaddrs="/ip4/0.0.0.0/tcp/9000"
       - --eth1.providerUrl=${EC_NODE}
-      - --metrics.enabled
-      - --weakSubjectivitySyncLatest=${LS_RAPID_SYNC}
     logging:
       driver: awslogs
       options:
         awslogs-create-group: "true"
         awslogs-stream: ${INSTANCE_NAME}
-
-  prometheus:
-    restart: unless-stopped
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus:/etc/prometheus
-    expose:
-      - 9090/tcp
-    command: 
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    depends_on:
-      - consensus
-    logging: 
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}-prometheus
