@@ -13,7 +13,6 @@ services:
       - 30303:30303/tcp
       - 30303:30303/udp
       - 8545:8545/tcp
-    mem_limit: 14.8G
     command: 
       - --config=${NETHERMIND_NETWORK}
       - --datadir=/nethermind/data
