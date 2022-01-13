@@ -13,6 +13,7 @@ services:
       - 9000:9000/tcp
       - 9000:9000/udp
       - 5052:5052/tcp
+    mem_limit: 28G
     command:
       - lighthouse
       - bn
