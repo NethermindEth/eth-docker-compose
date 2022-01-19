@@ -58,7 +58,8 @@ services:
       - --accept-terms-of-use
       - --datadir=/var/lib/prysm
       # - --wallet-dir=/var/lib/prysm/wallet
-      - --beacon-rpc-provider=http://localhost:4000
+      - --beacon-rpc-provider
+      - http://localhost:4000
       - --prater
       - --graffiti=Nethermind
       - --verbosity=${LOG_LEVEL}
