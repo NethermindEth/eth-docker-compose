@@ -17,7 +17,6 @@ services:
     environment:
       - JAVA_OPTS=-XX:SoftMaxHeapSize=2g -Xmx4g
     command:
-      - /opt/teku/bin/teku
       - --data-path=/var/lib/teku
       - --log-destination=CONSOLE
       - --logging=${LOG_LEVEL}
