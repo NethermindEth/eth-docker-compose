@@ -4,7 +4,7 @@ services:
 
   consensus:
     stop_grace_period: 1m
-    container_name: prysm-consesus-client
+    container_name: prysm-consensus-client
     restart: unless-stopped
     # image: ${IMAGE_VERSION}
     image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
