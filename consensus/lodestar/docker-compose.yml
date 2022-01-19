@@ -35,7 +35,7 @@ services:
         max-size: "10m"
         max-file: "10"
 
-    validator:
+  validator:
       restart: unless-stopped
       container_name: lodestar-validator-client
       image: ${IMAGE_VERSION}
