@@ -9,16 +9,16 @@ services:
     image: ${IMAGE_VERSION}
     volumes:
       - ./lsconsensus-data:/var/lib/lodestar/consensus
-    ports:
-      - 9000:9000/tcp
-      - 9000:9000/udp
-      - 9596:9596/tcp
+    # ports:
+    #   - 9000:9000/tcp
+    #   - 9000:9000/udp
+    #   - 9596:9596/tcp
     environment:
       NODE_OPTIONS: --max_old_space_size=6144
     command: 
       - beacon 
       - --rootDir=/var/lib/lodestar/consensus
-      - --network=${NETWORK}
+      - --network=prater
       - --logFile=/var/lib/lodestart/consensus/logs/beacon.log 
       - --logLevelFile=${LOG_LEVEL}
       - --api.rest.enabled 
@@ -28,8 +28,10 @@ services:
       - --eth1.providerUrl=${EC_NODE}
       - --weakSubjectivitySyncLatest=${LS_RAPID_SYNC}
       - --network.targetPeers=${PEERS_COUNT}
+    network_mode: host
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "10"
+
