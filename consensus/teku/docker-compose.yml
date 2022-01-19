@@ -47,7 +47,7 @@ services:
       - consensus
     command:
       - validator-client
-      - --beacon-node-api-endpoint=127.0.0.1:4000
+      - --beacon-node-api-endpoint=http://localhost:5051
       - --data-path=/var/lib/teku
       - --log-destination=CONSOLE
       - --network=auto
