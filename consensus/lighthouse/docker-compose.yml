@@ -54,7 +54,7 @@ services:
       --graffiti=Nethermind
       --debug-level=${LOG_LEVEL}
       --network=prater
-    #network_mode: host
+    network_mode: host
     volumes:
       - ./validators:/root/prater/validators
     depends_on:
