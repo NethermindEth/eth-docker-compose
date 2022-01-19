@@ -57,7 +57,7 @@ services:
     command:
       - --accept-terms-of-use
       - --datadir=/var/lib/prysm
-      - --wallet-dir=/var/lib/prysm/wallet
+      # - --wallet-dir=/var/lib/prysm/wallet
       - --beacon-rpc-provider=http://localhost:4000
       - --prater
       - --graffiti=Nethermind
