@@ -35,6 +35,18 @@ services:
         max-size: "10m"
         max-file: "10"
 
+  validator-import:
+    image: ${IMAGE_VERSION}
+    command: |
+      accounts import
+      --accept-terms-of-use
+      --keys-dir=/var/lib/lodestar/keys/validator_keys
+      --account-password-file=/var/lib/lodestar/validators/keystores/keystore_password.txt
+      --wallet-password-file=/var/lib/lodestar/validators/keystores/wallet_password.txt
+    volumes:
+      - ./keys:/var/lib/lodestar/keys
+      - ./wallet:/home/.eth2validators/lodestar-wallet-v2
+
   validator:
       restart: unless-stopped
       container_name: lodestar-validator-client
