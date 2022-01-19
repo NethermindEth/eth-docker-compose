@@ -29,7 +29,7 @@ services:
       - --eth1-header-req-limit=150
       - --accept-terms-of-use
     logging:
-      driver: awslogs
+      driver: "json-file"
       options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+        max-size: "10m"
+        max-file: "10"

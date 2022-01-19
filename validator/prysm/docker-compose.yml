@@ -20,7 +20,7 @@ services:
       - --accept-terms-of-use
       - --wallet-password-file=/var/lib/prysm/wallet/password.txt
     logging:
-      driver: awslogs
+      driver: "json-file"
       options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+        max-size: "10m"
+        max-file: "10"
