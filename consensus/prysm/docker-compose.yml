@@ -7,7 +7,6 @@ services:
     container_name: prysm-consesus-client
     restart: unless-stopped
     image: ${IMAGE_VERSION}
-    network_mode: host
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
     # ports:
@@ -29,6 +28,7 @@ services:
       - --fallback-web3provider=${EC_FALLBACK_NODE2}
       - --eth1-header-req-limit=150
       - --accept-terms-of-use
+    network_mode: host
     logging:
       driver: "json-file"
       options:
