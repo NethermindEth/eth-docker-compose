@@ -52,7 +52,6 @@ services:
       - --validators-keystore-locking-enabled=true
       - --validator-keys=/var/lib/teku/validator-keys:/var/lib/teku/validator-passwords
       - --validators-graffiti=Nethermind
-      - --validators-early-attestations-enabled=false
     network_mode: host
     logging:
       driver: "json-file"
