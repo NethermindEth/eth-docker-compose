@@ -9,7 +9,7 @@ services:
     image: ${IMAGE_VERSION}
     user: root
     volumes:
-      - ./tekuconsensus-data:/var/lib/teku
+      - ./teku-consensus-data:/var/lib/teku
     # ports:
     #   - 9000:9000/tcp
     #   - 9000:9000/udp
@@ -34,3 +34,30 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+
+  validator:
+    restart: unless-stopped
+    container_name: teku-validator-client
+    image: ${IMAGE_VERSION}
+    volumes:
+      - ./teku-validator-data:/var/lib/teku
+      - ./wallet:/var/lib/prysm/wallet
+      - ./keys:/var/lib/prysm/keys
+    depends_on:
+      - consensus
+    command:
+      - validator-client
+      - --beacon-node-api-endpoint=${EC_NODE}
+      - --data-path=/var/lib/teku
+      - --log-destination=CONSOLE
+      - --network=${NETWORK}
+      - --validators-keystore-locking-enabled=true
+      - --validator-keys=/var/lib/teku/validator-keys:/var/lib/teku/validator-passwords
+      - --validators-graffiti=Nethermind
+      - --validators-early-attestations-enabled=false
+    network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "1"
