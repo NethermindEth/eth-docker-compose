@@ -63,7 +63,7 @@ services:
       - --graffiti=Nethermind
       - --verbosity=${LOG_LEVEL}
       - --enable-doppelganger
-      - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
+      # - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     network_mode: host
     logging:
       driver: "json-file"
