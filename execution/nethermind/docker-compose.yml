@@ -18,7 +18,7 @@ services:
       - --config=${NETHERMIND_NETWORK}
       - --datadir=/nethermind/data
       - --log=${NETHERMIND_LOG_LEVEL}
-      - --Metrics.Enabled=true
+      - --Metrics.Enabled=${NETHERMIND_METRICS_ENABLED}
       - --Metrics.PushGatewayUrl=${NETHERMIND_METRICS_URL}
       - --Metrics.NodeName=${NETHERMIND_NODENAME}
       - --Init.WebSocketsEnabled=true

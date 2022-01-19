@@ -26,10 +26,38 @@ services:
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
-#      - --checkpoint-sync-url=${LH_RAPID_SYNC}
       - --validator-monitor-auto
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "10"
+
+  validator-import:
+      image: ${IMAGE_VERSION}
+      command: |
+        lighthouse account_manager validator import
+        --password-file=/root/prater/keys/keystore_password.txt
+        --reuse-password
+        --directory=/root/prater/keys/validator_keys
+        --datadir=/root/prater
+      volumes:
+        - ./keys:/root/prater/keys
+        - ./validators:/root/prater/validators
+  
+  validator:
+    image: ${IMAGE_VERSION}
+    command: |
+      lighthouse validator_client
+      --validators-dir=/root/prater/validators
+      --beacon-nodes=http://localhost:5052
+      --graffiti=Nethermind
+      --debug-level=${LOG_LEVEL}
+    #network_mode: host
+    volumes:
+      - ./validators:/root/prater/validators
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "1"
