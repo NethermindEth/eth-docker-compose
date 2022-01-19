@@ -40,10 +40,11 @@ services:
     container_name: teku-validator-client
     image: ${IMAGE_VERSION}
     volumes:
-      - ./teku-validator-data:/var/lib/teku
+      - ./teku-data:/var/lib/teku
     depends_on:
       - consensus
     command:
+      - /opt/teku/bin/teku
       - validator-client
       - --beacon-node-api-endpoint=http://localhost:5051
       - --data-path=/var/lib/teku
@@ -52,6 +53,7 @@ services:
       - --validators-keystore-locking-enabled=true
       - --validator-keys=/var/lib/teku/validator-keys:/var/lib/teku/validator-passwords
       - --validators-graffiti=Nethermind
+      - --validators-early-attestations-enabled=false
     network_mode: host
     logging:
       driver: "json-file"
