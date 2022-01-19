@@ -47,10 +47,10 @@ services:
       - consensus
     command:
       - validator-client
-      - --beacon-node-api-endpoint=${EC_NODE}
+      - --beacon-node-api-endpoint=127.0.0.1:4000
       - --data-path=/var/lib/teku
       - --log-destination=CONSOLE
-      - --network=${NETWORK}
+      - --network=auto
       - --validators-keystore-locking-enabled=true
       - --validator-keys=/var/lib/teku/validator-keys:/var/lib/teku/validator-passwords
       - --validators-graffiti=Nethermind
