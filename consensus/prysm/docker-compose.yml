@@ -7,17 +7,18 @@ services:
     container_name: prysm-consesus-client
     restart: unless-stopped
     image: ${IMAGE_VERSION}
+    network_mode: host
     volumes:
       - ./prysmconsensus-data:/var/lib/prysm
-    ports:
-      - 13000:13000/tcp
-      - 12000:12000/udp
-      - 3500:3500/tcp
-      - 4000:4000/tcp
+    # ports:
+    #   - 13000:13000/tcp
+    #   - 12000:12000/udp
+    #   - 3500:3500/tcp
+    #   - 4000:4000/tcp
     command:
       - --datadir=/var/lib/prysm/
       - --verbosity=${LOG_LEVEL}
-      - --${NETWORK}
+      - --prater
       - --p2p-tcp-port=13000
       - --p2p-udp-port=12000
       - --p2p-max-peers=${PEER_COUNT}
@@ -33,3 +34,39 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+  
+  validator-import:
+    image: ${IMAGE_VERSION}
+    command: |
+      accounts import
+      --accept-terms-of-use
+      --keys-dir=/var/lib/prysm/keys/validator_keys
+      --account-password-file=/var/lib/prysm/keys/keystore_password.txt
+      --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
+    volumes:
+      - ./keys:/var/lib/prysm/keys
+      - ./wallet:/home/.eth2validators/prysm-wallet-v2
+
+  validator:
+    restart: unless-stopped
+    container_name: prysm-validator-client
+    image: ${IMAGE_VERSION}
+    volumes:
+      - ./wallet:/var/lib/prysm/wallet
+      - ./keys:/var/lib/prysm/keys
+    command:
+      - --accept-terms-of-use
+      - --datadir=/var/lib/prysm
+      - --wallet-dir=/var/lib/prysm/wallet
+      - --beacon-rpc-provider=http://localhost:4000
+      - --prater
+      - --graffiti=Nethermind
+      - --verbosity=${LOG_LEVEL}
+      - --enable-doppelganger
+      - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
+    network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "1"
