@@ -22,6 +22,7 @@ services:
       - --p2p-tcp-port=13000
       - --p2p-udp-port=12000
       - --p2p-max-peers=${PEER_COUNT}
+      - --p2p-host-ip=${PUBLIC_IP}
       - --rpc-host=0.0.0.0
       - --grpc-gateway-host=0.0.0.0
       - --http-web3provider=${EC_NODE}
