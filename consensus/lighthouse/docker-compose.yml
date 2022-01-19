@@ -21,7 +21,7 @@ services:
       - --port=9000
       - --http
       - --http-address=0.0.0.0
-      - --network=${NETWORK}
+      - --network=prater
       - --target-peers=${PEER_COUNT}
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
@@ -53,6 +53,7 @@ services:
       --beacon-nodes=http://localhost:5052
       --graffiti=Nethermind
       --debug-level=${LOG_LEVEL}
+      --network=prater
     #network_mode: host
     volumes:
       - ./validators:/root/prater/validators
