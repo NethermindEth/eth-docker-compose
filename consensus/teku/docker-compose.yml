@@ -44,7 +44,6 @@ services:
     depends_on:
       - consensus
     command:
-      - /opt/teku/bin/teku
       - validator-client
       - --beacon-node-api-endpoint=http://localhost:5051
       - --data-path=/var/lib/teku
