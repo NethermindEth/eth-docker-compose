@@ -28,6 +28,7 @@ services:
       - --eth1.providerUrls=${EC_NODE}
       - --weakSubjectivitySyncLatest=${LS_RAPID_SYNC}
       - --network.targetPeers=${PEERS_COUNT}
+      - --p2p-host-ip=${PUBLIC_IP}
     network_mode: host
     logging:
       driver: "json-file"
