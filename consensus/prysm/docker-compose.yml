@@ -9,7 +9,7 @@ services:
     image: ${IMAGE_VERSION}
     network_mode: host
     volumes:
-      - prysmconsensus-data:/var/lib/prysm
+      - ./prysmconsensus-data:/var/lib/prysm
     # ports:
     #   - 13000:13000/tcp
     #   - 12000:12000/udp
