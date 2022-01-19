@@ -43,6 +43,7 @@ services:
         - ./lsvalidator-data:/var/lib/lodestar/validators
         - ./wallet:/var/lib/lodestar/wallet
         - ./keys:/var/lib/lodestar/validators/keystores
+        - ./secrets:/var/lib/lodestar/validators/secrets
       depends_on:
         - consensus
       command:
