@@ -55,6 +55,8 @@ services:
     volumes:
       - ./wallet:/var/lib/prysm/wallet
       - ./keys:/var/lib/prysm/keys
+    depends_on:
+      - consensus
     command:
       - --accept-terms-of-use
       - --datadir=/var/lib/prysm
