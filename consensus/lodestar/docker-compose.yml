@@ -49,11 +49,9 @@ services:
         - validator
         - --rootDir=/var/lib/lodestar/validators
         - --server=${EC_NODE}
-        - --wallet-dir=/var/lib/lodestar/wallet
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
-        - --wallet-password-file=/var/lib/lodestar/keys/wallet_password.txt
       network_mode: host
       logging:
         driver: "json-file"
