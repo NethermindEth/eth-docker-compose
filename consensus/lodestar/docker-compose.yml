@@ -25,7 +25,7 @@ services:
       - --api.rest.host=0.0.0.0
       - --network.discv5.bindAddr="/ip4/0.0.0.0/udp/9000"
       - --network.localMultiaddrs="/ip4/0.0.0.0/tcp/9000"
-      - --eth1.providerUrl=${EC_NODE}
+      - --eth1.providerUrls=${EC_NODE}
       - --weakSubjectivitySyncLatest=${LS_RAPID_SYNC}
       - --network.targetPeers=${PEERS_COUNT}
     network_mode: host
@@ -35,3 +35,28 @@ services:
         max-size: "10m"
         max-file: "10"
 
+    validator:
+      restart: unless-stopped
+      container_name: lodestar-validator-client
+      image: ${IMAGE_VERSION}
+      volumes:
+        - ./wallet:/var/lib/lodestar/wallet
+        - ./keys:/var/lib/lodestar/keys
+      depends_on:
+        - consensus
+      command:
+        - --accept-terms-of-use
+        - --datadir=/var/lib/lodestar
+        - --wallet-dir=/var/lib/lodestar/wallet
+        - --beacon-rpc-provider=127.0.0.1:4000
+        - --prater
+        - --graffiti=Nethermind
+        - --verbosity=${LOG_LEVEL}
+        - --enable-doppelganger
+        - --wallet-password-file=/var/lib/lodestar/keys/wallet_password.txt
+      network_mode: host
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "100m"
+          max-file: "1"
