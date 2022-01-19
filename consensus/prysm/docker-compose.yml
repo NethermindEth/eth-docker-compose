@@ -58,13 +58,13 @@ services:
     command:
       - --accept-terms-of-use
       - --datadir=/var/lib/prysm
-      # - --wallet-dir=/var/lib/prysm/wallet
+      - --wallet-dir=/var/lib/prysm/wallet
       - --beacon-rpc-provider=127.0.0.1:4000
       - --prater
       - --graffiti=Nethermind
       - --verbosity=${LOG_LEVEL}
       - --enable-doppelganger
-      # - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
+      - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     network_mode: host
     logging:
       driver: "json-file"
