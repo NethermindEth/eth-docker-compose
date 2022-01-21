@@ -40,10 +40,7 @@ services:
     command: |
       account validator import
       --network prater
-      --accept-terms-of-use
-      --keys-dir=/var/lib/lodestar/keys/validator_keys
-      --account-password-file=/var/lib/lodestar/validators/keystores/keystore_password.txt
-      --wallet-password-file=/var/lib/lodestar/validators/keystores/wallet_password.txt
+      --directory=/var/lib/lodestar/keys/validator_keys
     volumes:
       - ./keys:/var/lib/lodestar/keys
       - ./wallet:/home/.eth2validators/lodestar-wallet-v2
