@@ -62,8 +62,8 @@ services:
         - --keystoresDir=/keys/keystores
         - --secretsDir
         - --server=${EC_NODE}
-        - --importKeystoresPath=/keys/keystores/
-        - --importKeystoresPassword
+        - --importKeystoresPath=/var/lib/lodestar/keys/keystore
+        - --importKeystoresPassword=/var/lib/lodestar/keys/password.txt
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
