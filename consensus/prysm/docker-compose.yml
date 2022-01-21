@@ -42,7 +42,7 @@ services:
     command: |
       accounts import
       --accept-terms-of-use
-      --keys-dir=/var/lib/prysm/keys/validator_keys
+      --keys-dir=/var/lib/prysm/keys/
       --account-password-file=/var/lib/prysm/keys/keystore_password.txt
       --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     volumes:
