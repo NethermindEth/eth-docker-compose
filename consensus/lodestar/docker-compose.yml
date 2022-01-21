@@ -35,15 +35,15 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  validator-import:
-    image: ${IMAGE_VERSION}
-    command: |
-      account validator import
-      --network prater
-      --directory=/var/lib/lodestar/keys/validator_keys
-    volumes:
-      - ./keys:/var/lib/lodestar/keys
-      - ./wallet:/home/.eth2validators/lodestar-wallet-v2
+  # validator-import:
+  #   image: ${IMAGE_VERSION}
+  #   command: |
+  #     account validator import
+  #     --network prater
+  #     --directory=/var/lib/lodestar/keys/validator_keys
+  #   volumes:
+  #     - ./keys:/var/lib/lodestar/keys
+  #     - ./wallet:/home/.eth2validators/lodestar-wallet-v2
 
   validator:
       restart: unless-stopped
@@ -60,6 +60,8 @@ services:
         - validator
         - --rootDir=/var/lib/lodestar/validators
         - --server=${EC_NODE}
+        - --importKeystoresPath=/var/lib/lodestar/keys/validator_keys
+        - --importKeystoresePassword=/var/lib/lodestar/secrets
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
