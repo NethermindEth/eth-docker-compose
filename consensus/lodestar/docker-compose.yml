@@ -60,8 +60,8 @@ services:
         - validator
         - --rootDir=/var/lib/lodestar/validators
         - --server=${EC_NODE}
-        - --importKeystoresPath=/keys/validator_keys
-        - --importKeystoresPassword=/secrets
+        - --importKeystoresPath=/var/lib/lodestar/keys/validator_keys
+        - --importKeystoresPassword=/var/lib/lodestar/secrets
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
