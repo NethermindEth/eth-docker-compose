@@ -63,7 +63,7 @@ services:
         - --secretsDir
         - --server=${EC_NODE}
         - --importKeystoresPath=/keys/keystores/
-        - --importKeystoresPassword=password.txt
+        - --importKeystoresPassword
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
