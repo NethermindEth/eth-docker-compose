@@ -62,8 +62,8 @@ services:
         - --keystoresDir=/keys/keystores
         - --secretsDir
         - --server=${EC_NODE}
-        - --importKeystoresPath=/keys/validator_keys/keystores/
-        - --importKeystoresPassword=/keys/validator_keys/password.txt
+        - --importKeystoresPath=/keys/keystores/
+        - --importKeystoresPassword=/keys/password.txt
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
