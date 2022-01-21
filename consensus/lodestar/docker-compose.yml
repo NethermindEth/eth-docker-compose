@@ -61,7 +61,7 @@ services:
         - --rootDir=/var/lib/lodestar/
         - --server=${EC_NODE}
         - --importKeystoresPath=/keys/validator_keys
-        - --importKeystoresPassword=/secrets
+        - --importKeystoresPassword=/
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
