@@ -53,17 +53,16 @@ services:
         - ./lsvalidator-data:/var/lib/lodestar/validators
         - ./wallet:/var/lib/lodestar/wallet
         - ./secrets:/var/lib/lodestar/secrets
-        - ./keys:/var/lib/lodestar/keys
+        - ./keystore:/var/lib/lodestar/keystore
       depends_on:
         - consensus
       command:
         - validator
         - --rootDir=/var/lib/lodestar/
-        - --keystoresDir=/keys/keystores
         - --secretsDir
         - --server=${EC_NODE}
-        - --importKeystoresPath=/var/lib/lodestar/keys/keystore
-        - --importKeystoresPassword=/var/lib/lodestar/keys/password.txt
+        - --importKeystoresPath=/var/lib/lodestar/keystore
+        - --importKeystoresPassword=/var/lib/lodestar/keystore/password.txt
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
