@@ -58,10 +58,10 @@ services:
         - consensus
       command:
         - validator
-        - --rootDir=/var/lib/lodestar/validators
+        - --rootDir=/var/lib/lodestar/
         - --server=${EC_NODE}
-        - --importKeystoresPath=/var/lib/lodestar/keys/validator_keys
-        - --importKeystoresPassword=/var/lib/lodestar/keys
+        - --importKeystoresPath=/keys/validator_keys
+        - --importKeystoresPassword=/secrets/
         - --network=prater
         - --graffiti=Nethermind
         - --logLevel=${LOG_LEVEL}
