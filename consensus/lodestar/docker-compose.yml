@@ -59,7 +59,7 @@ services:
       command:
         - validator
         - --rootDir=/var/lib/lodestar/
-        - --keystoredDir=/keys/keystores
+        - --keystoresDir=/keys/keystores
         - --secretsDir
         - --server=${EC_NODE}
         - --importKeystoresPath=/keys/validator_keys/keystores/
