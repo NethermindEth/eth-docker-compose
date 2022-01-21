@@ -52,7 +52,7 @@ services:
       volumes:
         - ./lsvalidator-data:/var/lib/lodestar/validators
         - ./wallet:/var/lib/lodestar/wallet
-        - ./secrets:/var/lib/lodestar/validators/secrets
+        - ./secrets:/var/lib/lodestar/secrets
         - ./keys:/var/lib/lodestar/keys
       depends_on:
         - consensus
