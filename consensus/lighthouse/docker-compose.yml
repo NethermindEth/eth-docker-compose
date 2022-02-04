@@ -29,7 +29,4 @@ services:
       - --validator-monitor-auto
       - --target-peers=${PEER_COUNT}
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

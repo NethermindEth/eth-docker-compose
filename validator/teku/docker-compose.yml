@@ -23,7 +23,4 @@ services:
       - --validator-keys=/var/lib/teku/keystore:/var/lib/teku/keystore/secrets
       - --validators-early-attestations-enabled=false
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

@@ -36,7 +36,4 @@ services:
       - --eth1-header-req-limit=150
       - --accept-terms-of-use
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

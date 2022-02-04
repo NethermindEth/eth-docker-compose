@@ -32,7 +32,4 @@ services:
       - --EthStats.Secret=${ETHSTATS_SECRET}
       - --EthStats.Contact=${ETHSTATS_CONTACT}
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

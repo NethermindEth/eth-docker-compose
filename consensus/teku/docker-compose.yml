@@ -29,7 +29,4 @@ services:
       - --eth1-deposit-contract-max-request-size=150
       - ${TEKU_RAPID_SYNC}
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

@@ -43,7 +43,4 @@ services:
       - --enable-doppelganger
       - --wallet-password-file=/var/lib/prysm/keys/wallet_password.txt
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs

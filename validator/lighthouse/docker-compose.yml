@@ -32,7 +32,4 @@ services:
       - --debug-level=${LOG_LEVEL}
       - --validators-dir=/var/lib/lighthouse/validators
     logging:
-      driver: awslogs
-      options:
-        awslogs-create-group: "true"
-        awslogs-stream: ${INSTANCE_NAME}
+      driver: gcplogs
