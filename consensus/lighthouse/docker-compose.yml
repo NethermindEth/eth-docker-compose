@@ -22,10 +22,11 @@ services:
       - --datadir=/var/lib/lighthouse
       - --http
       - --http-address=0.0.0.0
+      - --enr-address=${PUBLIC_IP}
+      - --enr-udp-port=12000
       - --eth1-endpoints=${EC_NODE}
       - --eth1-blocks-per-log-query=150
       - --debug-level=${LOG_LEVEL}
-      - --validator-monitor-auto
       - --target-peers=${PEER_COUNT}
     logging:
       driver: gcplogs
