@@ -6,13 +6,12 @@ services:
     image: ${IMAGE_VERSION}
     command: |
       lighthouse account_manager validator import
-      --testnet-dir=/var/lib/lighthouse/config
+      --network=gnosis
       --password-file=/var/lib/lighthouse/keystore/keystore_password.txt
       --reuse-password
       --directory=/var/lib/lighthouse/keystore/validator_keys
       --datadir=/var/lib/lighthouse
     volumes:
-      - ./gbc/config:/var/lib/lighthouse/config
       - ./keystore:/var/lib/lighthouse/keystore
       - ./validators:/var/lib/lighthouse/validators
 
@@ -22,11 +21,10 @@ services:
     image: ${IMAGE_VERSION}
     volumes:
       - ./validators:/var/lib/lighthouse/validators
-      - ./gbc/config:/var/lib/lighthouse/config
     command:
       - lighthouse
       - vc
-      - --testnet-dir=/var/lib/lighthouse/config
+      - --network=gnosis
       - --beacon-nodes=${CC_NODE}
       - --graffiti=${GRAFFITI}
       - --debug-level=${LOG_LEVEL}
