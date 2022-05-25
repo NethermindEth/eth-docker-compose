@@ -44,7 +44,7 @@ services:
 
   beacon:
     stop_grace_period: 30s
-    container_name: cl-beacon-lighthouse
+    container_name: cl-beacon-teku
     restart: unless-stopped
     image: ${CL_IMAGE_VERSION}
     networks:
@@ -57,31 +57,33 @@ services:
       - 9000:9000/udp
       - 5054:5054/tcp
     expose:
-      - 5052
+      - 5051
     command:
-      - lighthouse
-      - bn
-      - --staking
-      - --merge
-      - --http
-      - --http-address=0.0.0.0
-      - --execution-endpoints=http://execution:8551
-      - --eth1-endpoints=http://execution:8545
-      - --jwt-secrets=/tmp/jwt/jwtsecret
-      - --terminal-total-difficulty-override=${CL_TTD}
-      - --suggested-fee-recipient=${CL_FEE_RECIPIENT}
-      - --boot-nodes=${CL_BOOTNODES}
-      - --datadir=/data
       - --network=ropsten
-      - --validator-monitor-auto
-      - --target-peers=${CL_TARGET_PEERS}
-      - --discovery-port=9000
-      - --disable-upnp
-      - --subscribe-all-subnets
-      - --import-all-attestations
-      - --metrics
+      - --data-beacon-path=/data/teku/beacon
+      - --data-path=/data/teku
+      - --data-storage-archive-frequency=2048
+      - --data-storage-mode=PRUNE
+      - --data-storage-non-canonical-blocks-enabled=false
+      - --ee-endpoint=http://execution:8551
+      - --validators-proposer-default-fee-recipient=${CL_FEE_RECIPIENT}
+      - --Xee-version=kilnv2
+      - --ee-jwt-secret-file=/tmp/jwt/jwtsecret
+      - --Xnetwork-total-terminal-difficulty-override=${CL_TTD}
+      - --p2p-discovery-bootnodes=${CL_BOOTNODES}
+      - --p2p-enabled=true
+      - --p2p-port=9000
+      - --p2p-peer-upper-bound=${CL_TARGET_PEERS}
+      - --rest-api-enabled=true
+      - --rest-api-host-allowlist=*
+      - --rest-api-interface=0.0.0.0
+      - --rest-api-port=5051
+      - --rest-api-cors-origins=*
+      - --rest-api-docs-enabled=false
+      - --metrics-enabled=true
+      - --metrics-host-allowlist=*
+      - --metrics-interface=0.0.0.0
       - --metrics-port=5054
-      - --metrics-address=0.0.0.0
     logging:
       driver: "json-file"
       options:
@@ -90,25 +92,15 @@ services:
 
   init-validator:
     container_name: init-validator
-    image: ${VL_IMAGE_VERSION}
+    build: ./init
     networks:
       - merge
     volumes:
       - ./data/consensus:/data
       - ./keystore:/keystore
-    command: 
-      - lighthouse 
-      - account_manager 
-      - validator 
-      - import
-      - --network=ropsten
-      - --password-file=/keystore/keystore_password.txt
-      - --reuse-password
-      - --directory=/keystore/validator_keys
-      - --datadir=/data
 
   validator:
-    container_name: cl-validator-lighthouse
+    container_name: cl-validator-teku
     image: ${VL_IMAGE_VERSION}
     depends_on:
       init-validator:
@@ -120,15 +112,15 @@ services:
     volumes:
       - ./data/consensus:/data
     command: 
-      - lighthouse 
-      - vc
-      - --network=ropsten
-      - --beacon-nodes=http://beacon:5052
-      - --graffiti=${VL_GRAFFITI}
-      - --validators-dir=/data/validators
-      - --metrics
+      - validator-client
+      - --validators-graffiti=${VL_GRAFFITI}
+      - --validator-keys=/data/validator/keys:/data/validator/passwords
+      - --validators-proposer-default-fee-recipient=${CL_FEE_RECIPIENT}
+      - --beacon-node-api-endpoint=http://beacon:5051
+      - --metrics-enabled=true
+      - --metrics-host-allowlist=*
+      - --metrics-interface=0.0.0.0
       - --metrics-port=5056
-      - --metrics-address=0.0.0.0
     logging:
       driver: "json-file"
       options:
