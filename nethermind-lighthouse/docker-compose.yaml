@@ -89,7 +89,7 @@ services:
         max-file: "10"
 
   init-validator:
-    container_name: validator-init
+    container_name: init-validator
     image: ${VL_IMAGE_VERSION}
     networks:
       - merge
