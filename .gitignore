@@ -1,0 +1,4 @@
+jwtsecret
+.env
+keystore/
+data/

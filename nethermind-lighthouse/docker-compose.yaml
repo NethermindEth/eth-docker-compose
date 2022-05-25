@@ -1,0 +1,141 @@
+version: '3.9'
+
+services:
+
+  execution:
+    stop_grace_period: 30s
+    container_name: el-nethermind
+    restart: unless-stopped
+    image: ${EL_IMAGE_VERSION}
+    networks:
+      - merge
+    volumes:
+      - ./data/execution/:/data
+      - ./jwtsecret:/tmp/jwt/jwtsecret:ro
+    ports:
+      - 30303:30303/tcp
+      - 30303:30303/udp
+      - 8008:8008/tcp
+    expose:
+      - 8545
+      - 8551
+    command: 
+      - --config=ropsten
+      - --datadir=/data
+      - --Metrics.Enabled=${EL_METRICS_ENABLED}
+      - --Metrics.ExposePort=8008
+      - --Metrics.NodeName=${EL_METRICS_NODENAME}
+      - --Sync.SnapSync=${EL_SNAP_SYNC_ENABLED}
+      - --JsonRpc.Enabled=true
+      - --JsonRpc.Host=0.0.0.0
+      - --JsonRpc.JwtSecretFile=/tmp/jwt/jwtsecret
+      - --JsonRpc.AdditionalRpcUrls=["http://0.0.0.0:8551|http;ws|net;eth;subscribe;engine;web3;client"]
+      - --HealthChecks.Enabled=true
+      - --EthStats.Enabled=${EL_ETHSTATS_ENABLED}
+      - --EthStats.Server=${EL_ETHSTATS_SERVER}
+      - --EthStats.Name=${EL_ETHSTATS_NAME}
+      - --EthStats.Secret=${EL_ETHSTATS_SECRET}
+      - --EthStats.Contact=${EL_ETHSTATS_CONTACT}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  beacon:
+    stop_grace_period: 30s
+    container_name: cl-beacon-lighthouse
+    restart: unless-stopped
+    image: ${CL_IMAGE_VERSION}
+    networks:
+      - merge
+    volumes:
+      - ./data/consensus:/data
+      - ./jwtsecret:/tmp/jwt/jwtsecret:ro
+    ports:
+      - 9000:9000/tcp
+      - 9000:9000/udp
+      - 5054:5054/tcp
+    expose:
+      - 5052
+    command:
+      - lighthouse
+      - bn
+      - --staking
+      - --merge
+      - --http
+      - --http-address=0.0.0.0
+      - --execution-endpoints=http://execution:8551
+      - --eth1-endpoints=http://execution:8545
+      - --jwt-secrets=/tmp/jwt/jwtsecret
+      - --terminal-total-difficulty-override=${CL_TTD}
+      - --suggested-fee-recipient=${CL_FEE_RECIPIENT}
+      - --boot-nodes=${CL_BOOT_NODES}
+      - --datadir=/data
+      - --network=ropsten
+      - --validator-monitor-auto
+      - --target-peers=${CL_TARGET_PEERS}
+      - --discovery-port=9000
+      - --disable-upnp
+      - --subscribe-all-subnets
+      - --import-all-attestations
+      - --metrics
+      - --metrics-port=5054
+      - --metrics-address=0.0.0.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  init-validator:
+    container_name: validator-init
+    image: ${VL_IMAGE_VERSION}
+    networks:
+      - merge
+    volumes:
+      - ./data/consensus:/data
+      - ./keystore:/keystore
+    command: 
+      - lighthouse 
+      - account_manager 
+      - validator 
+      - import
+      - --network=ropsten
+      - --password-file=/keystore/keystore_password.txt
+      - --reuse-password
+      - --directory=/keystore/validator_keys
+      - --datadir=/data
+
+  validator:
+    container_name: cl-validator-lighthouse
+    image: ${VL_IMAGE_VERSION}
+    depends_on:
+      init-validator:
+        condition: service_completed_successfully
+    networks:
+      - merge
+    ports:
+      - 5056:5056
+    volumes:
+      - ./data/consensus:/data
+    command: 
+      - lighthouse 
+      - vc
+      - --network=ropsten
+      - --beacon-nodes=http://beacon:5052
+      - --graffiti=${VL_GRAFFITI}
+      - --validators-dir=/data/validators
+      - --metrics
+      - --metrics-port=5056
+      - --metrics-address=0.0.0.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+networks:
+  merge:
+    name: ropsten_network
+
