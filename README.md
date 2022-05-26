@@ -11,7 +11,7 @@ Set of docker-compose stacks for running Nethermind Client as an execution node 
 1. Copy `.env.example` to `.env`
 ```bash
 CLIENT=lighthouse # Lowercased. Available options: lighthouse | teku | TODO
-cp nethermind-$client/.env.example nethermind-$client/.env
+cp nethermind-$CLIENT/.env.example nethermind-$CLIENT/.env
 ```
 2. Fill `.env` according to your needs
 3. Create JWT
